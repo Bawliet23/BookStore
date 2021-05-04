@@ -43,6 +43,11 @@ public class BookServiceImpl implements IBookService {
         return convertToDTO(book);
     }
 
+    @Override
+    public void saveBook(BookDTO bookDTO) {
+        Book book = convertToEntity(bookDTO);
+    }
+
     private Book convertToEntity (BookDTO bookDTO)
     {
 

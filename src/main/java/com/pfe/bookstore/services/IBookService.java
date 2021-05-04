@@ -8,4 +8,5 @@ import org.springframework.data.domain.Pageable;
 public interface IBookService {
     Page<BookDTO> getBooksByPage(Pageable page);
     BookDTO getBookById(Long id);
+    void saveBook(BookDTO bookDTO);
 }
