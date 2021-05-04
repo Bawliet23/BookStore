@@ -2,17 +2,18 @@ package com.pfe.bookstore.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
-@Data
+@Data @ToString
 public class Book implements Serializable {
 
     @Id
@@ -26,25 +27,36 @@ public class Book implements Serializable {
     private String image;
     private String contenu;
     private double rating;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Auteur auteur;
     @OneToMany(
+            fetch = FetchType.LAZY,
             mappedBy = "book",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     private List<Comment> comments = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "books")
-    @JsonBackReference
-    private Set<Order> orders = new HashSet<>();
-    @ManyToMany(mappedBy = "mybooks")
-    @JsonBackReference
-    private Set<Client> owners = new HashSet<>();
-    @ManyToMany(mappedBy = "wishList")
-    @JsonBackReference
-    private Set<Client> whishLists = new HashSet<>();
-    @ManyToMany(fetch = FetchType.EAGER,
+    @ManyToMany(mappedBy = "books",fetch = FetchType.LAZY,  cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JsonIgnore
+    private List<Order> orders;
+    @ManyToMany(mappedBy = "mybooks",fetch = FetchType.LAZY,  cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JsonIgnore
+    private List<Client> owners ;
+    @ManyToMany(mappedBy = "wishList",fetch = FetchType.LAZY,  cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JsonIgnore
+    private List<Client> whishLists;
+    @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
@@ -53,26 +65,23 @@ public class Book implements Serializable {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
-    @JsonBackReference
-    private Set<Genre> genres = new HashSet<>();
+    private List<Genre> genres ;
 
 
-    public void addComment(Comment comment) {
-        comments.add(comment);
-        comment.setBook(this);
-    }
 
-    public void removeComment(Comment comment) {
-        comments.remove(comment);
-        comment.setBook(null);
-    }
-    public void addOrder(Order order) {
-        orders.add(order);
-        order.addBook(this);
-    }
 
-    public void removeOrder(Order order) {
-        orders.remove(order);
-        order.removeBook(null);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

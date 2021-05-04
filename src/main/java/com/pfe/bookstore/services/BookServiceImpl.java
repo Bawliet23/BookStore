@@ -33,94 +33,14 @@ public class BookServiceImpl implements IBookService {
     @Override
     public Page<BookDTO> getBooksByPage(Pageable page) {
         Page<Book> books = bookRepository.findAll(page);
-        Page<BookDTO> bookDtoPage =new Page<BookDTO>() {
-            @Override
-            public int getTotalPages() {
-                return books.getTotalPages();
-            }
-
-            @Override
-            public long getTotalElements() {
-                return books.getTotalElements();
-            }
-
-            @Override
-            public <U> Page<U> map(Function<? super BookDTO, ? extends U> function) {
-                return null;
-            }
-
-            @Override
-            public int getNumber() {
-                return books.getNumber();
-            }
-
-            @Override
-            public int getSize() {
-                return books.getSize();
-            }
-
-            @Override
-            public int getNumberOfElements() {
-                return books.getNumberOfElements();
-            }
-
-            @Override
-            public List<BookDTO> getContent() {
-                return books.getContent().stream().map(book -> convertToDTO(book)).collect(Collectors.toList());
-            }
-
-            @Override
-            public boolean hasContent() {
-                return books.hasContent();
-            }
-
-            @Override
-            public Sort getSort() {
-                return books.getSort();
-            }
-
-            @Override
-            public boolean isFirst() {
-                return books.isFirst();
-            }
-
-            @Override
-            public boolean isLast() {
-                return books.isLast();
-            }
-
-            @Override
-            public boolean hasNext() {
-                return books.hasNext();
-            }
-
-            @Override
-            public boolean hasPrevious() {
-                return books.hasPrevious();
-            }
-
-            @Override
-            public Pageable nextPageable() {
-                return books.nextPageable();
-            }
-
-            @Override
-            public Pageable previousPageable() {
-                return books.previousPageable();
-            }
-
-            @Override
-            public Iterator<BookDTO> iterator() {
-                return null;
-            }
-        };
-        System.out.println(bookDtoPage.getContent().get(0));
+        Page<BookDTO> bookDtoPage = books.map(this::convertToDTO);
         return bookDtoPage;
     }
 
     @Override
     public BookDTO getBookById(Long id) {
-        return convertToDTO(bookRepository.getOne(id));
+        Book book =bookRepository.getOne(id);
+        return convertToDTO(book);
     }
 
     private Book convertToEntity (BookDTO bookDTO)

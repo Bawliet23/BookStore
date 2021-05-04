@@ -1,6 +1,7 @@
 package com.pfe.bookstore.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,8 +15,8 @@ public class Comment implements Serializable {
     @Column(name = "comment_id")
     private Long id;
     private String contenu;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
     private Book book;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;

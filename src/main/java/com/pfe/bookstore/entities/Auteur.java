@@ -2,6 +2,7 @@ package com.pfe.bookstore.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,7 +21,7 @@ public class Auteur extends User {
             orphanRemoval = true
     )
     @JsonBackReference
-    private List<Book> books = new ArrayList<>();
+    private List<Book> books ;
 
 
     public void addBook(Book book) {

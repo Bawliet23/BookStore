@@ -22,16 +22,16 @@ public class BookstoreApplication {
     public ModelMapper modelMapper()
     {
         ModelMapper modelMapper = new ModelMapper();
-        PropertyMap<Book, BookDTO> bookMap = new PropertyMap<Book, BookDTO>() {
-        protected void configure() {
-
-            map().setGenres(source.getGenres().stream().map(book->modelMapper.map(book, GenreDTO.class)).collect(Collectors.toSet()));
-            map().setAuteur(modelMapper.map(source.getAuteur(), AuteurDTO.class));
-
-        }
-    };
-
-        modelMapper.addMappings(bookMap);
+//        PropertyMap<Book, BookDTO> bookMap = new PropertyMap<Book, BookDTO>() {
+//        protected void configure() {
+//
+//            map().setGenres(source.getGenres().stream().map(book->modelMapper.map(book, GenreDTO.class)).collect(Collectors.toSet()));
+//            map().setAuteur(modelMapper.map(source.getAuteur(), AuteurDTO.class));
+//
+//        }
+//    };
+//
+//        modelMapper.addMappings(bookMap);
         return modelMapper;
     }
 

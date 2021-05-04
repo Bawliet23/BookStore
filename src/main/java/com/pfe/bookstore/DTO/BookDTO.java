@@ -14,6 +14,7 @@ public class BookDTO {
     private String image;
     private String contenu;
     private double rating;
-    private AuteurDTO auteur;
+    private String  auteurUsername;
     private Set<GenreDTO> genres = new HashSet<>();
+    private Set<CommentDTO> comments = new HashSet<>();
 }

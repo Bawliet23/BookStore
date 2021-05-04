@@ -28,13 +28,4 @@ public class Order  implements Serializable {
     )
     private Set<Book> books = new HashSet<>();
 
-    public void addBook(Book book) {
-        books.add(book);
-        book.addOrder(this);
-    }
-
-    public void removeBook(Book book) {
-        books.remove(book);
-        book.removeOrder(null);
-    }
 }

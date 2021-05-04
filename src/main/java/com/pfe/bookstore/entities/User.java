@@ -1,6 +1,7 @@
 package com.pfe.bookstore.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NonNull;
 
@@ -37,17 +38,9 @@ public class User implements Serializable {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @JsonIgnore
     private List<Comment> comments = new ArrayList<>();
 
-//
-//    public void addComment(Comment comment) {
-//        comments.add(comment);
-//        comment.setUser(this);
-//    }
-//
-//    public void removeComment(Comment comment) {
-//        comments.remove(comment);
-//        comment.setUser(null);
-//    }
+
 
 }

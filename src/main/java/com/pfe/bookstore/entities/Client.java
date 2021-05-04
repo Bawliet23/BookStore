@@ -27,7 +27,7 @@ public class Client extends User {
             joinColumns = @JoinColumn(name = "client_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
-    private Set<Book> mybooks = new HashSet<>();
+    private List<Book> mybooks;
 
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
@@ -37,7 +37,7 @@ public class Client extends User {
             joinColumns = @JoinColumn(name = "client_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
-    private Set<Book> wishList = new HashSet<>();
+    private List<Book> wishList;
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
@@ -46,6 +46,6 @@ public class Client extends User {
             joinColumns = @JoinColumn(name = "client_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
-    private Set<Genre> myGenres = new HashSet<>();
+    private List<Genre> myGenres ;
 
 }
