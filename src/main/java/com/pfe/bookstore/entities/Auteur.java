@@ -20,7 +20,7 @@ public class Auteur extends User {
             fetch = FetchType.LAZY,
             orphanRemoval = true
     )
-    @JsonBackReference
+    @JsonIgnore
     private List<Book> books ;
 
 

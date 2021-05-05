@@ -3,9 +3,14 @@ package com.pfe.bookstore.services;
 import com.pfe.bookstore.DTO.AuteurDTO;
 import com.pfe.bookstore.DTO.BookDTO;
 import com.pfe.bookstore.DTO.GenreDTO;
+import com.pfe.bookstore.entities.Auteur;
 import com.pfe.bookstore.entities.Book;
 import com.pfe.bookstore.entities.Genre;
+import com.pfe.bookstore.repositories.IAuteurRepository;
 import com.pfe.bookstore.repositories.IBookRepository;
+import com.pfe.bookstore.repositories.IGenreRepository;
+import com.pfe.bookstore.repositories.IUserRepository;
+import com.pfe.bookstore.utils.FileHandler;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +19,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.io.IOException;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -27,6 +31,10 @@ import java.util.stream.Collectors;
 public class BookServiceImpl implements IBookService {
     @Autowired
     private IBookRepository bookRepository;
+    @Autowired
+    private IAuteurRepository auteurRepository;
+    @Autowired
+    private IGenreRepository genreRepository;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -44,8 +52,20 @@ public class BookServiceImpl implements IBookService {
     }
 
     @Override
-    public void saveBook(BookDTO bookDTO) {
+    public void saveBook(BookDTO bookDTO, MultipartFile content, MultipartFile cover) throws IOException {
+
         Book book = convertToEntity(bookDTO);
+         book.setContenu(FileHandler.uploadFile(content));
+         book.setImage(FileHandler.uploadFile(cover));
+        Auteur auteur = auteurRepository.getOne(book.getAuteur().getId());
+        ArrayList<Genre> genres = new ArrayList<>();
+        for (GenreDTO genreDTO : bookDTO.getGenres()){
+            Genre genre = genreRepository.getOne(genreDTO.getId());
+            genres.add(genre);
+        }
+        book.setGenres(genres);
+        book.setAuteur(auteur);
+        bookRepository.save(book);
     }
 
     private Book convertToEntity (BookDTO bookDTO)

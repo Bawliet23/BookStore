@@ -1,5 +1,6 @@
 package com.pfe.bookstore.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfe.bookstore.DTO.BookDTO;
 import com.pfe.bookstore.entities.Book;
 import com.pfe.bookstore.services.IBookService;
@@ -32,8 +33,8 @@ public class BookController {
         return ResponseEntity.ok()
                 .body(bookService.getBookById(id));
     }
-    @PostMapping("/upload")
-    public void uploadFiles(@RequestParam("file") MultipartFile multipartFiles) throws IOException {
-        FileHandler.uploadFile(multipartFiles);
+    @PostMapping("/addBook")
+    public void addBook(@RequestParam("content") MultipartFile book,@RequestParam("cover") MultipartFile cover,@RequestBody BookDTO bookDTO) throws IOException {
+        bookService.saveBook(bookDTO,book,cover);
     }
 }
