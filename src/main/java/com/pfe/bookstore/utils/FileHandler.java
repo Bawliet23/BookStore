@@ -1,10 +1,13 @@
 package com.pfe.bookstore.utils;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.apache.commons.io.FilenameUtils;
+
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -41,6 +44,18 @@ public static Resource downloadFile(String filename)  throws IOException {
     Resource resource = new UrlResource(filePath.toUri());
     return resource;
 }
+public static void deleteFile(String filename){
+    String ext = FilenameUtils.getExtension(filename);
+    if (ext.toLowerCase().equals("pdf")){
+        File fileToDelete = FileUtils.getFile(BOOKDIRECTORY+filename);
+        FileUtils.deleteQuietly(fileToDelete);
+    }else{
+        File fileToDelete = FileUtils.getFile(PROFILEDIRECTORY+filename);
+        FileUtils.deleteQuietly(fileToDelete);
+    }
+
+}
+
     public static String getSaltString() {
         String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder salt = new StringBuilder();

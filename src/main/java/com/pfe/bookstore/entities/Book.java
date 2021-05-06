@@ -27,7 +27,10 @@ public class Book implements Serializable {
     private String image;
     private String contenu;
     private double rating;
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JsonManagedReference
     private Auteur auteur;
     @OneToMany(

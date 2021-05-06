@@ -15,9 +15,15 @@ public class Comment implements Serializable {
     @Column(name = "comment_id")
     private Long id;
     private String contenu;
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY,cascade ={
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JsonIgnore
     private Book book;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,  cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     private User user;
 }

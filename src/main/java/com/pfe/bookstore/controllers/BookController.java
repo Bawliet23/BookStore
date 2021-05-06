@@ -33,8 +33,13 @@ public class BookController {
         return ResponseEntity.ok()
                 .body(bookService.getBookById(id));
     }
-    @PostMapping("/addBook")
-    public void addBook(@RequestParam("content") MultipartFile book,@RequestParam("cover") MultipartFile cover,@RequestBody BookDTO bookDTO) throws IOException {
+
+@PostMapping("/addBook")
+    public void addBook(@RequestParam("content") MultipartFile book,@RequestParam("cover") MultipartFile cover,@RequestBody BookDTO  bookDTO) throws IOException {
         bookService.saveBook(bookDTO,book,cover);
+    }
+    @DeleteMapping("/{id}")
+    public void deleteBook(@PathVariable("id") Long id){
+        bookService.deleteBook(id);
     }
 }

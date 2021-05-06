@@ -68,6 +68,14 @@ public class BookServiceImpl implements IBookService {
         bookRepository.save(book);
     }
 
+    @Override
+    public void deleteBook(Long id) {
+        Book book = bookRepository.getOne(id);
+        FileHandler.deleteFile(book.getContenu());
+        FileHandler.deleteFile(book.getImage());
+        bookRepository.delete(book);
+    }
+
     private Book convertToEntity (BookDTO bookDTO)
     {
 
