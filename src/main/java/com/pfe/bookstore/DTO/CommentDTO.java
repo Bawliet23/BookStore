@@ -7,5 +7,6 @@ import lombok.Data;
 public class CommentDTO {
     private Long id;
     private String contenu;
-    private String userUsername;
+    private UserDTO user;
+    private Long bookId;
 }
