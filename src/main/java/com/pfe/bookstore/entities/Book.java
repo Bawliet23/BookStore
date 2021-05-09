@@ -39,6 +39,7 @@ public class Book implements Serializable {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @OrderBy("createdAt DESC")
     private List<Comment> comments = new ArrayList<>();
 
     @ManyToMany(mappedBy = "books",fetch = FetchType.LAZY,  cascade = {

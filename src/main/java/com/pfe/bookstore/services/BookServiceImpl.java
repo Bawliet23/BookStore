@@ -5,6 +5,7 @@ import com.pfe.bookstore.DTO.BookDTO;
 import com.pfe.bookstore.DTO.GenreDTO;
 import com.pfe.bookstore.entities.Auteur;
 import com.pfe.bookstore.entities.Book;
+import com.pfe.bookstore.entities.Comment;
 import com.pfe.bookstore.entities.Genre;
 import com.pfe.bookstore.repositories.IAuteurRepository;
 import com.pfe.bookstore.repositories.IBookRepository;
