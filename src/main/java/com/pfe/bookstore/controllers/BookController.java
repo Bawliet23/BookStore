@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/book")
@@ -33,18 +34,23 @@ public class BookController {
         return ResponseEntity.ok()
                 .body(bookService.getBookById(id));
     }
-//        @PostMapping("/addBook")
-//    public ResponseEntity<Void> addBook(@RequestParam("content") MultipartFile book,@RequestParam("cover") MultipartFile cover,@RequestParam("book") String  bookDTO) throws IOException {
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        BookDTO bookDTO1 = objectMapper.readValue(bookDTO,BookDTO.class);
-//        bookService.saveBook(bookDTO1,book,cover);
-//        return ResponseEntity.ok().build();
-//    }
-@PostMapping("/addBook")
-    public ResponseEntity<Void> addBook(@RequestParam("content") MultipartFile book,@RequestParam("cover") MultipartFile cover,@RequestBody BookDTO  bookDTO) throws IOException {
-        bookService.saveBook(bookDTO,book,cover);
-     return ResponseEntity.ok().build();
+    @GetMapping("/genres")
+    public ResponseEntity<Page<BookDTO>> getBookByGenre(@PageableDefault(size = 10)Pageable page, @RequestParam List<Long> genresId){
+        return ResponseEntity.ok()
+                .body(bookService.getBooksByGenre(page, genresId));
     }
+        @PostMapping("/addBook")
+    public ResponseEntity<Void> addBook(@RequestParam("content") MultipartFile book,@RequestParam("cover") MultipartFile cover,@RequestParam("book") String  bookDTO) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        BookDTO bookDTO1 = objectMapper.readValue(bookDTO,BookDTO.class);
+        bookService.saveBook(bookDTO1,book,cover);
+        return ResponseEntity.ok().build();
+    }
+//@PostMapping("/addBook")
+//    public ResponseEntity<Void> addBook(@RequestParam("content") MultipartFile book,@RequestParam("cover") MultipartFile cover,@RequestBody BookDTO  bookDTO) throws IOException {
+//        bookService.saveBook(bookDTO,book,cover);
+//     return ResponseEntity.ok().build();
+//    }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable("id") Long id){
         bookService.deleteBook(id);

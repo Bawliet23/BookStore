@@ -76,6 +76,16 @@ public class BookServiceImpl implements IBookService {
         bookRepository.delete(book);
     }
 
+    @Override
+    public Page<BookDTO> getBooksByGenre(Pageable page, List<Long> genreId) {
+        List<Genre> genres= new ArrayList<>() ;
+        for (Long id : genreId){
+           Genre g = genreRepository.getOne(id);
+           genres.add(g);
+        }
+        return bookRepository.findBooksByGenresIn(genres,page).map(this::convertToDTO);
+    }
+
     private Book convertToEntity (BookDTO bookDTO)
     {
 
