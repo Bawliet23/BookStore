@@ -2,10 +2,7 @@ package com.pfe.bookstore.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfe.bookstore.DTO.BookDTO;
-import com.pfe.bookstore.entities.Book;
 import com.pfe.bookstore.services.IBookService;
-import com.pfe.bookstore.utils.FileHandler;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
