@@ -20,8 +20,8 @@ import static java.nio.file.Paths.get;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class FileHandler {
-    private static String BOOKDIRECTORY = "src/main/resources/static/books/";
-    private static String PROFILEDIRECTORY = "src/main/resources/static/profile/";
+    private static String BOOKDIRECTORY = "src/main/webapp/books/";
+    private static String PROFILEDIRECTORY = "src/main/webapp/profile/";
 
     public  static String  uploadFile(MultipartFile file) throws IOException {
         Path fileStorage=null;
@@ -57,10 +57,10 @@ public static void deleteFile(String filename){
 }
 
     public static String getSaltString() {
-        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        String SALTCHARS = "abcdefghijklmnopqrstuvyz1234567890";
         StringBuilder salt = new StringBuilder();
         Random rnd = new Random();
-        while (salt.length() < 18) { // length of the random string.
+        while (salt.length() < 9) { // length of the random string.
             int index = (int) (rnd.nextFloat() * SALTCHARS.length());
             salt.append(SALTCHARS.charAt(index));
         }

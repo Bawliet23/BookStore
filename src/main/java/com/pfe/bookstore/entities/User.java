@@ -3,7 +3,6 @@ package com.pfe.bookstore.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.NonNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -30,6 +29,7 @@ public class User implements Serializable {
     private String email;
     private Date birthday;
     private String image;
+    private double coins;
     private int reportednumber;
     @Column(insertable=false,updatable=false)
     private String role;

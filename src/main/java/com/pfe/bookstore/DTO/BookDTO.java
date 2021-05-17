@@ -1,4 +1,5 @@
 package com.pfe.bookstore.DTO;
+import com.pfe.bookstore.utils.Env;
 import lombok.Data;
 
 import java.util.HashSet;
@@ -17,4 +18,12 @@ public class BookDTO {
     private AuteurDTO  auteur;
     private Set<GenreDTO> genres = new HashSet<>();
     private Set<CommentDTO> comments = new HashSet<>();
+
+    public String getContenu() {
+        return Env.getUrlImages()+contenu;
+    }
+
+    public String getImage() {
+        return Env.getUrlImages()+image;
+    }
 }

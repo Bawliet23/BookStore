@@ -21,7 +21,7 @@ public class Book implements Serializable {
     @Column(name = "book_id")
     private Long id;
     private String name;
-    private Long price;
+    private double price;
     private String description;
     private int selles;
     private String image;
@@ -47,7 +47,7 @@ public class Book implements Serializable {
             CascadeType.MERGE
     })
     @JsonIgnore
-    private List<Order> orders;
+    private List<Cart> orders;
     @ManyToMany(mappedBy = "mybooks",fetch = FetchType.LAZY,  cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE

@@ -13,12 +13,9 @@ import java.util.Set;
 @DiscriminatorValue("client")
 public class Client extends User {
 
-    @OneToMany(
-            mappedBy = "client",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<Order> orders = new ArrayList<>();
+    @OneToOne(mappedBy = "client")
+    @JoinColumn(name = "cartId")
+    private Cart cart;
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
