@@ -1,11 +1,14 @@
 package com.pfe.bookstore.services;
 
+import com.pfe.bookstore.DTO.AuteurDTO;
 import com.pfe.bookstore.DTO.BookDTO;
 import com.pfe.bookstore.DTO.CartDTO;
 import com.pfe.bookstore.DTO.ClientDTO;
+import com.pfe.bookstore.entities.Auteur;
 import com.pfe.bookstore.entities.Book;
 import com.pfe.bookstore.entities.Cart;
 import com.pfe.bookstore.entities.Client;
+import com.pfe.bookstore.repositories.IAuteurRepository;
 import com.pfe.bookstore.repositories.IBookRepository;
 import com.pfe.bookstore.repositories.ICartRepository;
 import com.pfe.bookstore.repositories.IClientRepository;
@@ -26,6 +29,8 @@ import java.util.stream.Collectors;
 public class ClientService implements IClientService{
     @Autowired
     private IClientRepository clientRepo;
+    @Autowired
+    private IAuteurRepository auteurRepository;
     @Autowired
     private IBookRepository bookRepository;
     @Autowired
@@ -70,14 +75,31 @@ public class ClientService implements IClientService{
     @Override
     public CartDTO getCart(Long id) {
         Client client = clientRepo.getOne(id);
-        CartDTO cartDTO = modelMapper.map(client.getCart(),CartDTO.class);
-        return cartDTO;
+        return modelMapper.map(client.getCart(),CartDTO.class);
     }
 
     @Override
     public List<BookDTO> getWishList(Long id) {
         Client client = clientRepo.getOne(id);
         return client.getWishList().stream().map(book -> modelMapper.map(book,BookDTO.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Boolean follow(Long id, Long auteurId) {
+        Client client = clientRepo.getOne(id);
+        Auteur auteur = auteurRepository.getOne(auteurId);
+        if (!client.getFallows().contains(auteur)){
+            client.getFallows().add(auteur);
+            clientRepo.save(client);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public List<AuteurDTO> getFollows(Long id) {
+        Client client = clientRepo.getOne(id);
+        return client.getFallows().stream().map(auteur -> modelMapper.map(auteur,AuteurDTO.class)).collect(Collectors.toList());
     }
 
     @Override

@@ -44,5 +44,13 @@ public class Client extends User {
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
     private List<Genre> myGenres ;
-
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "fallows",
+            joinColumns = @JoinColumn(name = "client_id"),
+            inverseJoinColumns = @JoinColumn(name = "auteur_id")
+    )
+    private List<Auteur> fallows= new ArrayList<>();
 }

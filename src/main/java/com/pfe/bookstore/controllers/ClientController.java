@@ -1,5 +1,6 @@
 package com.pfe.bookstore.controllers;
 
+import com.pfe.bookstore.DTO.AuteurDTO;
 import com.pfe.bookstore.DTO.BookDTO;
 import com.pfe.bookstore.DTO.CartDTO;
 import com.pfe.bookstore.entities.Book;
@@ -77,5 +78,19 @@ public class ClientController {
         if(!deleted)
             return ResponseEntity.badRequest().body("Item Not Deleted");
         return ResponseEntity.ok("Item Deleted");
+    }
+    @GetMapping("/{id}/follows")
+    public ResponseEntity<?>  getFollows(@PathVariable("id") Long id){
+        List<AuteurDTO> auteurDTOS = clientService.getFollows(id);
+        if(auteurDTOS == null)
+            return ResponseEntity.badRequest().body("Some Problems");
+        return ResponseEntity.ok(auteurDTOS);
+    }
+    @PostMapping("/{id}/follows")
+    public ResponseEntity<?>  followAuteur(@PathVariable("id") Long id,@RequestParam("auteurId") Long auteurId) {
+    Boolean follwed = clientService.follow(id,auteurId);
+        if(!follwed)
+            return ResponseEntity.badRequest().body("Not Followed");
+        return ResponseEntity.ok("Followed");
     }
 }

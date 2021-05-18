@@ -1,6 +1,7 @@
 package com.pfe.bookstore.services;
 
 
+import com.pfe.bookstore.DTO.AuteurDTO;
 import com.pfe.bookstore.DTO.BookDTO;
 import com.pfe.bookstore.DTO.CartDTO;
 import com.pfe.bookstore.DTO.ClientDTO;
@@ -18,6 +19,8 @@ public interface IClientService {
     Book addToWishList(Long id,Long bookId);
     CartDTO getCart(Long id);
     List<BookDTO> getWishList(Long id);
+    Boolean follow(Long id,Long auteurId);
+    List<AuteurDTO> getFollows(Long id);
     Boolean emptyCart(Long id);
     Boolean emptyWishlist(Long id);
     Boolean deleteCartItem(Long id,Long bookId);

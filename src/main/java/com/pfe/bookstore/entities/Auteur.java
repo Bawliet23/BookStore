@@ -1,7 +1,6 @@
 package com.pfe.bookstore.entities;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
@@ -22,7 +21,12 @@ public class Auteur extends User {
     )
     @JsonIgnore
     private List<Book> books ;
-
+    @ManyToMany(mappedBy = "fallows",fetch = FetchType.LAZY,  cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JsonIgnore
+    private List<Client> followers = new ArrayList<>();
 
     public void addBook(Book book) {
         books.add(book);
