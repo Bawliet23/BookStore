@@ -17,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -44,12 +46,25 @@ public class ClientService implements IClientService{
     }
 
     @Override
-    public Book addToCart(Long id, BookDTO bookDTO){
+    public Book addToCart(Long id, Long bookId){
         Client client = clientRepo.getOne(id);
-        Book book= bookRepository.getOne(bookDTO.getId());
-        client.getCart().getBooks().add(book);
-        clientRepo.save(client);
-        return book;
+        Book book= bookRepository.getOne(bookId);
+        if (!client.getCart().getBooks().contains(book)){
+            client.getCart().getBooks().add(book);
+            clientRepo.save(client);
+        }
+          return book;
+    }
+
+    @Override
+    public Book addToWishList(Long id, Long bookId) {
+        Client client = clientRepo.getOne(id);
+        Book book= bookRepository.getOne(bookId);
+       if (!client.getWishList().contains(book)){
+           client.getWishList().add(book);
+           clientRepo.save(client);
+       }
+       return book;
     }
 
     @Override
@@ -57,6 +72,44 @@ public class ClientService implements IClientService{
         Client client = clientRepo.getOne(id);
         CartDTO cartDTO = modelMapper.map(client.getCart(),CartDTO.class);
         return cartDTO;
+    }
+
+    @Override
+    public List<BookDTO> getWishList(Long id) {
+        Client client = clientRepo.getOne(id);
+        return client.getWishList().stream().map(book -> modelMapper.map(book,BookDTO.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Boolean emptyCart(Long id) {
+        Client client = clientRepo.getOne(id);
+        client.getCart().getBooks().clear();
+        clientRepo.save(client);
+        return client.getCart().getBooks().isEmpty();
+    }
+
+    @Override
+    public Boolean emptyWishlist(Long id) {
+        Client client = clientRepo.getOne(id);
+        client.getWishList().clear();
+        clientRepo.save(client);
+        return client.getWishList().isEmpty();
+    }
+
+    @Override
+    public Boolean deleteCartItem(Long id, Long bookId) {
+        Client client = clientRepo.getOne(id);
+        Boolean deleted = client.getCart().getBooks().removeIf(book -> book.getId().equals(bookId));
+        clientRepo.save(client);
+        return deleted;
+    }
+
+    @Override
+    public Boolean deleteWishListItem(Long id, Long bookId) {
+        Client client = clientRepo.getOne(id);
+        Boolean deleted = client.getWishList().removeIf(book -> book.getId().equals(bookId));
+        clientRepo.save(client);
+        return deleted;
     }
 
     @Override

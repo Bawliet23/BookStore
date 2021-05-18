@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/client")
@@ -17,8 +19,8 @@ public class ClientController {
     private IClientService clientService;
 
     @PostMapping("/{id}/addCart")
-    public ResponseEntity<?> addToCart(@PathVariable("id") Long id, @RequestBody BookDTO bookDTO){
-    Book book = clientService.addToCart(id,bookDTO);
+    public ResponseEntity<?> addToCart(@PathVariable("id") Long id,@RequestParam("bookId") Long bookId){
+    Book book = clientService.addToCart(id,bookId);
     if(book == null)
          return ResponseEntity.badRequest().body("Not Added");
 
@@ -31,4 +33,49 @@ public class ClientController {
            return ResponseEntity.badRequest().body("No Cart Found");
        return ResponseEntity.ok(cartDTO);
    }
+
+   @DeleteMapping("/{id}/emptyCart")
+    public ResponseEntity<?> emptyCart(@PathVariable("id") Long id){
+       Boolean isEmpty = clientService.emptyCart(id);
+       if(!isEmpty)
+           return ResponseEntity.badRequest().body("Cart Not Empty");
+       return ResponseEntity.ok("Cart Empty");
+   }
+    @DeleteMapping("/{id}/cart/{bookId}")
+    public ResponseEntity<?> deleteCartItem(@PathVariable("id") Long id,@PathVariable("bookId") Long bookId){
+        Boolean deleted = clientService.deleteCartItem(id, bookId);
+        if(!deleted)
+            return ResponseEntity.badRequest().body("Item Not Deleted");
+        return ResponseEntity.ok("Item Deleted");
+    }
+
+    @PostMapping("/{id}/wishList")
+    public ResponseEntity<?> addToWishList(@PathVariable("id") Long id, @RequestParam("bookId") Long bookId){
+        Book book = clientService.addToWishList(id,bookId);
+        if(book == null)
+            return ResponseEntity.badRequest().body("Not Added");
+
+        return ResponseEntity.ok().body("Added successful");
+    }
+    @GetMapping("/{id}/wishList")
+    public  ResponseEntity<?> getWishList(@PathVariable("id") Long id){
+        List<BookDTO> bookDTOS = clientService.getWishList(id);
+        if(bookDTOS == null)
+            return ResponseEntity.badRequest().body("No Cart Found");
+        return ResponseEntity.ok(bookDTOS);
+    }
+    @DeleteMapping("/{id}/emptyWishList")
+    public ResponseEntity<?> emptyWishList(@PathVariable("id") Long id){
+        Boolean isEmpty = clientService.emptyWishlist(id);
+        if(!isEmpty)
+            return ResponseEntity.badRequest().body("WishList Not Empty");
+        return ResponseEntity.ok("WishList Empty");
+    }
+    @DeleteMapping("/{id}/wishList/{bookId}")
+    public ResponseEntity<?> deleteWishListItem(@PathVariable("id") Long id,@PathVariable("bookId") Long bookId){
+        Boolean deleted = clientService.deleteWishListItem(id, bookId);
+        if(!deleted)
+            return ResponseEntity.badRequest().body("Item Not Deleted");
+        return ResponseEntity.ok("Item Deleted");
+    }
 }
