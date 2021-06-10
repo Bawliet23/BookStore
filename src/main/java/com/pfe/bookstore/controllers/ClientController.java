@@ -28,7 +28,7 @@ public class ClientController {
         return ResponseEntity.ok().body("Added successful");
     }
    @GetMapping("/{id}/cart")
-    public  ResponseEntity<?> getcart(@PathVariable("id") Long id){
+    public  ResponseEntity<?> getCart(@PathVariable("id") Long id){
         CartDTO cartDTO = clientService.getCart(id);
        if(cartDTO == null)
            return ResponseEntity.badRequest().body("No Cart Found");

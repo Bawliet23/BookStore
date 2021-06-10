@@ -1,4 +1,6 @@
 package com.pfe.bookstore.utils;
+import org.springframework.beans.factory.annotation.Value;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 

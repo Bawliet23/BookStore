@@ -39,6 +39,9 @@ public class ClientService implements IClientService{
     private PasswordEncoder passwordEncoder;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private WebSocketService webSocketService;
+
     @Override
     public Client addClient(Client client) {
         client.setPassword(passwordEncoder.encode(client.getPassword()));
@@ -90,6 +93,7 @@ public class ClientService implements IClientService{
         Auteur auteur = auteurRepository.getOne(auteurId);
         if (!client.getFallows().contains(auteur)){
             client.getFallows().add(auteur);
+            webSocketService.sendMessage(auteurId,client.getUsername()+" follows You. ");
             clientRepo.save(client);
             return true;
         }
