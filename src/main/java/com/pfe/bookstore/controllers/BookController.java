@@ -31,6 +31,13 @@ public class BookController {
         return ResponseEntity.ok()
                 .body(bookService.getBookById(id));
     }
+
+    @GetMapping("/{name}")
+    public ResponseEntity<Page<BookDTO>> getBookByName(@PageableDefault(size = 10)Pageable page,@PathVariable("name") String name){
+        return ResponseEntity.ok()
+                .body(bookService.searchBookByName(name, page));
+    }
+
     @GetMapping("/genres")
     public ResponseEntity<Page<BookDTO>> getBookByGenre(@PageableDefault(size = 10)Pageable page, @RequestParam List<Long> genresId){
         return ResponseEntity.ok()
@@ -43,11 +50,7 @@ public class BookController {
         bookService.saveBook(bookDTO1,book,cover);
         return ResponseEntity.ok().build();
     }
-//@PostMapping("/addBook")
-//    public ResponseEntity<Void> addBook(@RequestParam("content") MultipartFile book,@RequestParam("cover") MultipartFile cover,@RequestBody BookDTO  bookDTO) throws IOException {
-//        bookService.saveBook(bookDTO,book,cover);
-//     return ResponseEntity.ok().build();
-//    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable("id") Long id){
         bookService.deleteBook(id);

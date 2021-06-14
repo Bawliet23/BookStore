@@ -1,0 +1,28 @@
+package com.pfe.bookstore.controllers;
+
+import com.pfe.bookstore.DTO.AuteurDTO;
+import com.pfe.bookstore.services.AuteurService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/auteur")
+public class AuteurController {
+
+    @Autowired
+    private AuteurService auteurService;
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getAuteur(@PathVariable Long id){
+        AuteurDTO auteur = auteurService.getAuteur(id);
+        if(auteur!=null)
+            return ResponseEntity.ok(auteur);
+        return ResponseEntity.ok("Author Not Found");
+    }
+
+}

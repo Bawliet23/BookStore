@@ -87,6 +87,11 @@ public class BookServiceImpl implements IBookService {
         return bookRepository.findBooksByGenresIn(genres,page).map(this::convertToDTO);
     }
 
+    @Override
+    public Page<BookDTO> searchBookByName(String name,Pageable page) {
+        return bookRepository.findBooksByNameContaining(page,name).map(this::convertToDTO);
+    }
+
     private Book convertToEntity (BookDTO bookDTO)
     {
 

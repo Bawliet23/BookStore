@@ -15,5 +15,6 @@ public interface IBookRepository extends JpaRepository<Book,Long> {
 
     Page<Book> findAll(Pageable page);
     Page<Book> findBooksByGenresIn(List<Genre> genres, Pageable pageable);
+    Page<Book> findBooksByNameContaining( Pageable pageable,String name);
 
 }

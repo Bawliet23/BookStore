@@ -16,4 +16,5 @@ public interface IBookService {
     void saveBook(BookDTO bookDTO, MultipartFile content,MultipartFile cover) throws IOException;
     void deleteBook(Long id);
     Page<BookDTO> getBooksByGenre(Pageable page, List<Long> genreId);
+    Page<BookDTO> searchBookByName(String name,Pageable page);
 }
