@@ -93,7 +93,7 @@ public class ClientService implements IClientService{
         Auteur auteur = auteurRepository.getOne(auteurId);
         if (!client.getFallows().contains(auteur)){
             client.getFallows().add(auteur);
-            webSocketService.sendMessage(auteurId,client.getUsername()+" follows You. ");
+            webSocketService.followNotification(auteurId,client.getUsername()+" follows You. ");
             clientRepo.save(client);
             return true;
         }

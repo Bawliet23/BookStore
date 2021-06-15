@@ -15,11 +15,18 @@ public class WebSocketService {
         this.messagingTemplate = messagingTemplate;
     }
 
-    public void sendMessage(final Long topicSuffix) {
-        messagingTemplate.convertAndSend("/notification/" + topicSuffix, "Default message from our WS service");
+    public void followNotification(final Long topicSuffix) {
+        messagingTemplate.convertAndSend("/follow/" + topicSuffix, "Default message from our WS service");
     }
 
-    public void sendMessage(final Long topicSuffix, final String payload) {
-        messagingTemplate.convertAndSend("/notification/" + topicSuffix, payload);
+    public void followNotification(final Long topicSuffix, final String payload) {
+        messagingTemplate.convertAndSend("/follow/" + topicSuffix, payload);
+    }
+    public void newBookNotification(final Long topicSuffix) {
+        messagingTemplate.convertAndSend("/newBook/" + topicSuffix, "Default message from our WS service");
+    }
+
+    public void newBookNotification(final Long topicSuffix, final String payload) {
+        messagingTemplate.convertAndSend("/newBook/" + topicSuffix, payload);
     }
 }

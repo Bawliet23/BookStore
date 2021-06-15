@@ -3,14 +3,8 @@ package com.pfe.bookstore.services;
 import com.pfe.bookstore.DTO.AuteurDTO;
 import com.pfe.bookstore.DTO.BookDTO;
 import com.pfe.bookstore.DTO.GenreDTO;
-import com.pfe.bookstore.entities.Auteur;
-import com.pfe.bookstore.entities.Book;
-import com.pfe.bookstore.entities.Comment;
-import com.pfe.bookstore.entities.Genre;
-import com.pfe.bookstore.repositories.IAuteurRepository;
-import com.pfe.bookstore.repositories.IBookRepository;
-import com.pfe.bookstore.repositories.IGenreRepository;
-import com.pfe.bookstore.repositories.IUserRepository;
+import com.pfe.bookstore.entities.*;
+import com.pfe.bookstore.repositories.*;
 import com.pfe.bookstore.utils.FileHandler;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -38,6 +32,10 @@ public class BookServiceImpl implements IBookService {
     private IGenreRepository genreRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private IClientRepository clientRepo;
+    @Autowired
+    private WebSocketService webSocketService;
 
     @Override
     public Page<BookDTO> getBooksByPage(Pageable page) {
@@ -67,6 +65,13 @@ public class BookServiceImpl implements IBookService {
         book.setGenres(genres);
         book.setAuteur(auteur);
         bookRepository.save(book);
+        List<Auteur> auteurs = new ArrayList<>();
+        auteurs.add(auteur);
+        List<Client> clients = clientRepo.findClientsByFallows(auteurs);
+        for (Client client : clients){
+            webSocketService.newBookNotification(client.getId());
+        }
+
     }
 
     @Override
