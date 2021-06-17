@@ -5,6 +5,5 @@ import com.pfe.bookstore.entities.User;
 import org.springframework.transaction.annotation.Transactional;
 
 
-@Transactional
 public interface IAuteurRepository extends  IUserBaseRepository<Auteur>{
 }

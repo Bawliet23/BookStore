@@ -53,7 +53,7 @@ public class BookServiceImpl implements IBookService {
     @Override
     public void saveBook(BookDTO bookDTO, MultipartFile content, MultipartFile cover) throws IOException {
 
-        Book book = convertToEntity(bookDTO);
+        Book book = modelMapper.map(bookDTO,Book.class);
          book.setContenu(FileHandler.uploadFile(content));
          book.setImage(FileHandler.uploadFile(cover));
         Auteur auteur = auteurRepository.getOne(book.getAuteur().getId());
@@ -67,10 +67,10 @@ public class BookServiceImpl implements IBookService {
         bookRepository.save(book);
         List<Auteur> auteurs = new ArrayList<>();
         auteurs.add(auteur);
-        List<Client> clients = clientRepo.findClientsByFallows(auteurs);
-        for (Client client : clients){
-            webSocketService.newBookNotification(client.getId());
-        }
+//        List<Client> clients = clientRepo.findClientsByFallows(auteurs);
+//        for (Client client : clients){
+//            webSocketService.newBookNotification(client.getId());
+//        }
 
     }
 

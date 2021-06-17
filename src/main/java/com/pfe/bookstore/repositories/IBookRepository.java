@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Collection;
 import java.util.List;
 
-@Repository
+
 public interface IBookRepository extends JpaRepository<Book,Long> {
 
     Page<Book> findAll(Pageable page);

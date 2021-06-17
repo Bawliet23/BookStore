@@ -34,8 +34,7 @@ public class BookController {
 
     @GetMapping("/{name}")
     public ResponseEntity<Page<BookDTO>> getBookByName(@PageableDefault(size = 10)Pageable page,@PathVariable("name") String name){
-        return ResponseEntity.ok()
-                .body(bookService.searchBookByName(name, page));
+        return ResponseEntity.ok().body(bookService.searchBookByName(name, page));
     }
 
     @GetMapping("/genres")
