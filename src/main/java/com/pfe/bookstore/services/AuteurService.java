@@ -28,7 +28,7 @@ public class AuteurService implements IAuteurService {
         auteur.setPassword(passwordEncoder.encode(auteur.getPassword()));
         return auteurRepositor.save(auteur);
     }
-    
+
     @Override
     public AuteurDTO1 getAuteur(Long id) {
         Optional<Auteur> auteur = auteurRepositor.findById(id);

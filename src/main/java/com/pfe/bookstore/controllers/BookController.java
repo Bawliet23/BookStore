@@ -32,7 +32,7 @@ public class BookController {
                 .body(bookService.getBookById(id));
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/search/{name}")
     public ResponseEntity<Page<BookDTO>> getBookByName(@PageableDefault(size = 10)Pageable page,@PathVariable("name") String name){
         return ResponseEntity.ok().body(bookService.searchBookByName(name, page));
     }
