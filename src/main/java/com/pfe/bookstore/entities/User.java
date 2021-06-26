@@ -40,7 +40,13 @@ public class User implements Serializable {
     )
     @JsonIgnore
     private List<Comment> comments = new ArrayList<>();
-
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonIgnore
+    private List<Notification> notifications = new ArrayList<>();
 
 
 }

@@ -3,12 +3,16 @@ package com.pfe.bookstore.controllers;
 import com.pfe.bookstore.DTO.AuteurDTO;
 import com.pfe.bookstore.DTO.BookDTO;
 import com.pfe.bookstore.DTO.CartDTO;
+import com.pfe.bookstore.entities.Auteur;
 import com.pfe.bookstore.entities.Book;
+import com.pfe.bookstore.entities.Client;
+import com.pfe.bookstore.repositories.IClientRepository;
 import com.pfe.bookstore.services.IClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 

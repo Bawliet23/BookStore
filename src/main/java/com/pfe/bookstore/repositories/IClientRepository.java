@@ -9,5 +9,5 @@ import java.util.List;
 
 
 public interface IClientRepository extends  IUserBaseRepository<Client>{
-//    List<Client> findClientsByFallows(List<Auteur> auteurs);
+    List<Client> findClientsByFallowsIn(List<Auteur> auteurs);
 }

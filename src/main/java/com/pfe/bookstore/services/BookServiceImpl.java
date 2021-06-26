@@ -1,25 +1,21 @@
 package com.pfe.bookstore.services;
 
-import com.pfe.bookstore.DTO.AuteurDTO;
 import com.pfe.bookstore.DTO.BookDTO;
 import com.pfe.bookstore.DTO.GenreDTO;
 import com.pfe.bookstore.entities.*;
 import com.pfe.bookstore.repositories.*;
 import com.pfe.bookstore.utils.FileHandler;
+import org.aspectj.weaver.ast.Not;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -36,6 +32,8 @@ public class BookServiceImpl implements IBookService {
     private IClientRepository clientRepo;
     @Autowired
     private WebSocketService webSocketService;
+    @Autowired
+    private INotificationRepository notificationRepository;
 
     @Override
     public Page<BookDTO> getBooksByPage(Pageable page) {
@@ -67,10 +65,14 @@ public class BookServiceImpl implements IBookService {
         bookRepository.save(book);
         List<Auteur> auteurs = new ArrayList<>();
         auteurs.add(auteur);
-//        List<Client> clients = clientRepo.findClientsByFallows(auteurs);
-//        for (Client client : clients){
-//            webSocketService.newBookNotification(client.getId());
-//        }
+        List<Client> clients =  clientRepo.findClientsByFallowsIn(auteurs);
+        for (Client client : clients){
+            Notification notification = new Notification();
+            notification.setNotification(auteur.getUsername()+" added a new Book with the title "+book.getName());
+            notification.setUser(client);
+            notificationRepository.save(notification);
+            webSocketService.newBookNotification(client.getId());
+        }
 
     }
 

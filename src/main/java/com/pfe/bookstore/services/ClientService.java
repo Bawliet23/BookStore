@@ -4,14 +4,8 @@ import com.pfe.bookstore.DTO.AuteurDTO;
 import com.pfe.bookstore.DTO.BookDTO;
 import com.pfe.bookstore.DTO.CartDTO;
 import com.pfe.bookstore.DTO.ClientDTO;
-import com.pfe.bookstore.entities.Auteur;
-import com.pfe.bookstore.entities.Book;
-import com.pfe.bookstore.entities.Cart;
-import com.pfe.bookstore.entities.Client;
-import com.pfe.bookstore.repositories.IAuteurRepository;
-import com.pfe.bookstore.repositories.IBookRepository;
-import com.pfe.bookstore.repositories.ICartRepository;
-import com.pfe.bookstore.repositories.IClientRepository;
+import com.pfe.bookstore.entities.*;
+import com.pfe.bookstore.repositories.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,6 +35,8 @@ public class ClientService implements IClientService{
     private ModelMapper modelMapper;
     @Autowired
     private WebSocketService webSocketService;
+    @Autowired
+    private INotificationRepository notificationRepository;
 
     @Override
     public Client addClient(Client client) {
@@ -93,6 +89,10 @@ public class ClientService implements IClientService{
         Auteur auteur = auteurRepository.getOne(auteurId);
         if (!client.getFallows().contains(auteur)){
             client.getFallows().add(auteur);
+            Notification notification = new Notification();
+            notification.setNotification(client.getUsername()+" follows You.");
+            notification.setUser(auteur);
+            notificationRepository.save(notification);
             webSocketService.followNotification(auteurId,client.getUsername()+" follows You. ");
             clientRepo.save(client);
             return true;

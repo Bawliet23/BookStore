@@ -2,10 +2,7 @@ package com.pfe.bookstore.entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -15,4 +12,9 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String notification;
+    @ManyToOne(fetch = FetchType.LAZY,  cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    private User user;
 }
