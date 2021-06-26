@@ -36,7 +36,8 @@ public class User implements Serializable {
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
     )
     @JsonIgnore
     private List<Comment> comments = new ArrayList<>();
