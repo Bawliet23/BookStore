@@ -1,8 +1,10 @@
 package com.pfe.bookstore.services;
 
 import com.pfe.bookstore.DTO.NotificationDTO;
+import com.pfe.bookstore.entities.Comment;
 import com.pfe.bookstore.entities.Notification;
 import com.pfe.bookstore.entities.User;
+import com.pfe.bookstore.repositories.ICommentRepository;
 import com.pfe.bookstore.repositories.IUserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +17,17 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements IUserService {
-    @Autowired
-    private IUserRepository userRepository;
-    @Autowired
-    private ModelMapper modelMapper;
+
+    private final IUserRepository userRepository;
+    private final ModelMapper modelMapper;
+    private final ICommentRepository commentRepository;
 
 
+    public UserServiceImpl(IUserRepository userRepository, ModelMapper modelMapper, ICommentRepository commentRepository) {
+        this.userRepository = userRepository;
+        this.modelMapper = modelMapper;
+        this.commentRepository = commentRepository;
+    }
 
 
     @Override
@@ -31,5 +38,20 @@ public class UserServiceImpl implements IUserService {
         }
          User user = byId.get();
         return  user.getNotifications().stream().map(notification -> modelMapper.map(notification, NotificationDTO.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Boolean deleteComment(Long userId, Long commentId) {
+        Optional<Comment> byId = commentRepository.findById(commentId);
+        if(byId.isPresent()){
+            Comment comment = byId.get();
+            if (comment.getUser().getId().equals(userId) || comment.getBook().getAuteur().getId().equals(userId)){
+                commentRepository.delete(comment);
+                return true;
+            }
+        }
+
+
+        return false;
     }
 }

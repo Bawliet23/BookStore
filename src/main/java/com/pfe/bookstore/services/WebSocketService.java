@@ -16,17 +16,21 @@ public class WebSocketService {
     }
 
     public void followNotification(final Long topicSuffix) {
+        System.out.println("socket working ha hahahah"+topicSuffix);
         messagingTemplate.convertAndSend("/follow/" + topicSuffix, "Default message from our WS service");
     }
 
     public void followNotification(final Long topicSuffix, final String payload) {
+        System.out.println("socket working ha hahahah"+topicSuffix);
         messagingTemplate.convertAndSend("/follow/" + topicSuffix, payload);
     }
     public void newBookNotification(final Long topicSuffix) {
+        System.out.println("socket working ha hahahah"+topicSuffix);
         messagingTemplate.convertAndSend("/newBook/" + topicSuffix, "Default message from our WS service");
     }
 
     public void newBookNotification(final Long topicSuffix, final String payload) {
+        System.out.println("socket working ha hahahah"+topicSuffix);
         messagingTemplate.convertAndSend("/newBook/" + topicSuffix, payload);
     }
 }

@@ -4,6 +4,7 @@ import com.pfe.bookstore.DTO.AuteurDTO;
 import com.pfe.bookstore.DTO.AuteurDTO1;
 import com.pfe.bookstore.DTO.BookDTO1;
 import com.pfe.bookstore.entities.Auteur;
+import com.pfe.bookstore.entities.Client;
 import com.pfe.bookstore.repositories.IAuteurRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,4 +41,9 @@ public class AuteurService implements IAuteurService {
          return null;
 
     }
+//    @Override
+//    public List<AuteurDTO> getFollows(Long id) {
+//        Auteur client = auteurRepositor.getOne(id);
+//        return client.getFallows().stream().map(auteur -> modelMapper.map(auteur,AuteurDTO.class)).collect(Collectors.toList());
+//    }
 }
