@@ -1,5 +1,6 @@
 package com.pfe.bookstore.controllers;
 
+import com.pfe.bookstore.DTO.CommentDTO;
 import com.pfe.bookstore.entities.Notification;
 import com.pfe.bookstore.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,15 @@ public class UserController {
         }
         return ResponseEntity.ok()
                 .body("Comment Not Deleted");
+    }
+    @PutMapping("/{userId}/comment")
+    public ResponseEntity<?> updateComment(@PathVariable("userId") Long userId,@RequestParam("commentId") Long commentId,@RequestParam("comment") String comment ){
+        CommentDTO commentDTO = userService.updateComment(userId, commentId,comment);
+        if (commentDTO !=null){
+            return ResponseEntity.ok()
+                    .body(commentDTO);
+        }
+        return ResponseEntity.ok()
+                .body("Comment Not Updated");
     }
 }

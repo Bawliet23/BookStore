@@ -1,5 +1,6 @@
 package com.pfe.bookstore.services;
 
+import com.pfe.bookstore.DTO.CommentDTO;
 import com.pfe.bookstore.DTO.NotificationDTO;
 import com.pfe.bookstore.entities.Comment;
 import com.pfe.bookstore.entities.Notification;
@@ -53,5 +54,20 @@ public class UserServiceImpl implements IUserService {
 
 
         return false;
+    }
+    @Override
+    public CommentDTO updateComment(Long userId, Long commentId, String commentS) {
+        Optional<Comment> byId = commentRepository.findById(commentId);
+        if(byId.isPresent()){
+            Comment comment = byId.get();
+            if (comment.getUser().getId().equals(userId)){
+                comment.setContenu(commentS);
+               Comment c =  commentRepository.save(comment);
+                return modelMapper.map(c,CommentDTO.class);
+            }
+        }
+
+
+        return null;
     }
 }
