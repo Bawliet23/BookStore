@@ -17,4 +17,5 @@ public interface IBookService {
     void deleteBook(Long id);
     Page<BookDTO> getBooksByGenre(Pageable page, List<Long> genreId);
     Page<BookDTO> searchBookByName(String name,Pageable page);
+    void rateBook(Long userId,Long bookId,Long value);
 }

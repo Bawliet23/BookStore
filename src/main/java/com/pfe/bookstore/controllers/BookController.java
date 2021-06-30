@@ -50,6 +50,11 @@ public class BookController {
         bookService.saveBook(bookDTO1,book,cover);
         return ResponseEntity.ok().build();
     }
+    @PostMapping("/{bookId}/rate")
+    public ResponseEntity<Void> rateBook(@RequestParam("userId") Long userId, @RequestParam("value") Long value, @PathVariable Long bookId) throws IOException {
+        bookService.rateBook(userId,bookId,value);
+        return ResponseEntity.ok().build();
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable("id") Long id){

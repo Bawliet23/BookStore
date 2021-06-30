@@ -4,4 +4,5 @@ import lombok.Data;
 
 @Data
 public class AuteurDTO extends UserDTO {
+    private String bio;
 }

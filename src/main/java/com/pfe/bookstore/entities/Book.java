@@ -26,7 +26,6 @@ public class Book implements Serializable {
     private int selles;
     private String image;
     private String contenu;
-    private double rating;
     @ManyToOne(fetch = FetchType.LAZY,cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
@@ -69,8 +68,14 @@ public class Book implements Serializable {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
-    private List<Genre> genres ;
-
+    private List<Genre> genres= new ArrayList<>() ;
+    @OneToMany(
+            mappedBy = "book",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private List<Rate> rates = new ArrayList<>();
 
 
 

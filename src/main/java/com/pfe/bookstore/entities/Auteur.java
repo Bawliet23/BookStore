@@ -12,6 +12,7 @@ import java.util.List;
 @Data
 @DiscriminatorValue("auteur")
 public class Auteur extends User {
+    private String bio;
     private Long rating;
     @OneToMany(
             mappedBy = "auteur",

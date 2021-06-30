@@ -48,6 +48,13 @@ public class User implements Serializable {
     )
     @JsonIgnore
     private List<Notification> notifications = new ArrayList<>();
-
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    @JsonIgnore
+    private List<Rate> rates = new ArrayList<>();
 
 }

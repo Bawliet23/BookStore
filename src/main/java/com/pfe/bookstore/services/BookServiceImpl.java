@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +35,10 @@ public class BookServiceImpl implements IBookService {
     private WebSocketService webSocketService;
     @Autowired
     private INotificationRepository notificationRepository;
+    @Autowired
+    private IRateRepository rateRepository;
+    @Autowired
+    private  IUserRepository userRepository;
 
     @Override
     public Page<BookDTO> getBooksByPage(Pageable page) {
@@ -97,6 +102,16 @@ public class BookServiceImpl implements IBookService {
     @Override
     public Page<BookDTO> searchBookByName(String name,Pageable page) {
         return bookRepository.findBooksByNameContaining(page,name).map(this::convertToDTO);
+    }
+    @Override
+    public void rateBook(Long userId, Long bookId, Long value) {
+        Rate rate = new Rate();
+        User user = userRepository.findById(userId).get();
+        Book book = bookRepository.findById(bookId).get();
+        rate.setUser(user);
+        rate.setBook(book);
+        rate.setValue(value);
+        rateRepository.save(rate);
     }
 
     private Book convertToEntity (BookDTO bookDTO)
