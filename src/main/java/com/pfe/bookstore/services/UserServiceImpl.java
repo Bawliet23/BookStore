@@ -42,19 +42,16 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Boolean deleteComment(Long userId, Long commentId) {
+    public Boolean deleteComment(Long commentId) {
         Optional<Comment> byId = commentRepository.findById(commentId);
         if(byId.isPresent()){
             Comment comment = byId.get();
-            if (comment.getUser().getId().equals(userId) || comment.getBook().getAuteur().getId().equals(userId)){
-                commentRepository.delete(comment);
+            commentRepository.delete(comment);
                 return true;
             }
+        return false;
         }
 
-
-        return false;
-    }
     @Override
     public CommentDTO updateComment(Long userId, Long commentId, String commentS) {
         Optional<Comment> byId = commentRepository.findById(commentId);

@@ -29,9 +29,9 @@ public class UserController {
     return  ResponseEntity.ok()
                 .body(notifications);
     }
-    @DeleteMapping("/{userId}/comment")
-    public ResponseEntity<?> deleteComment(@PathVariable("userId") Long userId,@RequestParam("commentId") Long commentId ){
-        Boolean aBoolean = userService.deleteComment(userId, commentId);
+    @DeleteMapping("/{commentId}/comment")
+    public ResponseEntity<?> deleteComment(@PathVariable("commentId") Long commentId ){
+        Boolean aBoolean = userService.deleteComment(commentId);
         if (aBoolean){
             return ResponseEntity.ok()
                     .body("Comment Deleted");

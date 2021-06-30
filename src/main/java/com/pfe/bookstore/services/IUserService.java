@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface IUserService {
     List<NotificationDTO> getNotification(Long id);
-    Boolean deleteComment(Long userId,Long commentId);
+    Boolean deleteComment(Long commentId);
     CommentDTO updateComment(Long userId, Long commentId, String comment);
 }
