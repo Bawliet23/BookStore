@@ -32,6 +32,13 @@ public class ClientController {
 
         return ResponseEntity.ok().body("Added successful");
     }
+    @PostMapping("/{id}/makeOrder")
+    public ResponseEntity<?> makeOrder(@PathVariable("id") Long id){
+        Boolean checkout = clientService.makeOrder(id);
+        if(!checkout)
+            return ResponseEntity.badRequest().body("Checkout Failed");
+        return ResponseEntity.ok().body("Checkout successful");
+    }
    @GetMapping("/{id}/cart")
     public  ResponseEntity<?> getCart(@PathVariable("id") Long id){
         CartDTO cartDTO = clientService.getCart(id);

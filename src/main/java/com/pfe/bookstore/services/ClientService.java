@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -156,5 +157,25 @@ public class ClientService implements IClientService{
     @Override
     public Client updateUser(Client client) {
         return null;
+    }
+
+    @Override
+    public Boolean makeOrder(Long clientId) {
+        Optional<Client> byId = clientRepo.findById(clientId);
+        if (byId.isPresent()) {
+            Client client = byId.get();
+            if (client.getCoins() >= client.getCart().getTotalPrice()) {
+                Cart cart = client.getCart();
+                for (Book book : cart.getBooks()) {
+                    client.getMybooks().add(book);
+                }
+                client.setCoins(client.getCoins()-cart.getTotalPrice());
+                emptyCart(client.getId());
+                clientRepo.save(client);
+                return true;
+            }
+        }
+            return false;
+
     }
 }
