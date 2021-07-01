@@ -46,6 +46,13 @@ public class ClientController {
            return ResponseEntity.badRequest().body("No Cart Found");
        return ResponseEntity.ok(cartDTO);
    }
+    @GetMapping("/{id}/books")
+    public  ResponseEntity<?> getMyBooks(@PathVariable("id") Long id){
+        List<BookDTO> books = clientService.getClientBooks(id);
+        if(books == null)
+            return ResponseEntity.badRequest().body("No Book Found");
+        return ResponseEntity.ok(books);
+    }
 
    @DeleteMapping("/{id}/emptyCart")
     public ResponseEntity<?> emptyCart(@PathVariable("id") Long id){

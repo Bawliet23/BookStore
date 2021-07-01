@@ -167,6 +167,7 @@ public class ClientService implements IClientService{
             if (client.getCoins() >= client.getCart().getTotalPrice()) {
                 Cart cart = client.getCart();
                 for (Book book : cart.getBooks()) {
+                    book.setSelles(book.getSelles()+1);
                     client.getMybooks().add(book);
                 }
                 client.setCoins(client.getCoins()-cart.getTotalPrice());
@@ -177,5 +178,15 @@ public class ClientService implements IClientService{
         }
             return false;
 
+    }
+
+    @Override
+    public List<BookDTO> getClientBooks(Long id) {
+        Optional<Client> byId = clientRepo.findById(id);
+        if (byId.isPresent()) {
+          return byId.get().getMybooks().stream().map(book -> modelMapper.map(book,BookDTO.class)).collect(Collectors.toList());
+        }
+
+        return null;
     }
 }

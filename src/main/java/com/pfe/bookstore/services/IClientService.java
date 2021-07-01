@@ -31,4 +31,5 @@ public interface IClientService {
     void deleteClient(Long id);
     Client updateUser(Client client);
     Boolean makeOrder(Long clientId);
+    List<BookDTO> getClientBooks(Long id);
 }
