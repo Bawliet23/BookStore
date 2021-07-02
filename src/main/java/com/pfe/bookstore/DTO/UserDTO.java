@@ -9,6 +9,7 @@ public class UserDTO {
     private String email;
     private Date birthday;
     private String image;
+    private double coins;
     private int reportednumber;
     private String role;
 }

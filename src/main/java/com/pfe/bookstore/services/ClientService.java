@@ -168,6 +168,7 @@ public class ClientService implements IClientService{
                 Cart cart = client.getCart();
                 for (Book book : cart.getBooks()) {
                     book.setSelles(book.getSelles()+1);
+                    book.getAuteur().setCoins(book.getPrice());
                     client.getMybooks().add(book);
                 }
                 client.setCoins(client.getCoins()-cart.getTotalPrice());

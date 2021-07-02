@@ -25,14 +25,14 @@ public class CommentServiceImpl implements ICommentService {
     private ModelMapper modelMapper;
 
     @Override
-    public void addComment(CommentDTO commentDTO) {
+    public CommentDTO addComment(CommentDTO commentDTO) {
         Comment comment = modelMapper.map(commentDTO,Comment.class);
         User user =userRepository.getOne(comment.getUser().getId());
         comment.setUser(user);
         Book book = bookRepository.getOne(comment.getBook().getId());
         comment.setBook(book);
-        commentRepository.save(comment);
-
+         Comment c = commentRepository.save(comment);
+         return modelMapper.map(c,CommentDTO.class);
 
     }
 }
