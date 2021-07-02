@@ -28,7 +28,7 @@ public class BookController {
                 .body(bookService.getBooksByPage(page));
     }
     @GetMapping("/bySelles")
-    public ResponseEntity<?> getBooksByMostSelles(@PageableDefault(size = 2)Pageable page){
+    public ResponseEntity<?> getBooksByMostSelles(@PageableDefault(size = 10)Pageable page){
         return ResponseEntity.ok()
                 .body(bookService.getBooksByMostSelles(page));
     }
