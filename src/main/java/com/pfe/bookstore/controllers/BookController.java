@@ -27,6 +27,11 @@ public class BookController {
         return ResponseEntity.ok()
                 .body(bookService.getBooksByPage(page));
     }
+    @GetMapping("/bySelles")
+    public ResponseEntity<?> getBooksByMostSelles(@PageableDefault(size = 2)Pageable page){
+        return ResponseEntity.ok()
+                .body(bookService.getBooksByMostSelles(page));
+    }
     @GetMapping("/{id}")
     public ResponseEntity<BookDTO> getBookById(@PathVariable("id") Long id){
         return ResponseEntity.ok()

@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -45,6 +46,11 @@ public class BookServiceImpl implements IBookService {
         Page<Book> books = bookRepository.findAll(page);
         Page<BookDTO> bookDtoPage = books.map(this::convertToDTO);
         return bookDtoPage;
+    }
+
+    @Override
+    public Page<BookDTO> getBooksByMostSelles(Pageable page) {
+        return bookRepository.findByOrderBySellesDesc(page).map(book -> modelMapper.map(book,BookDTO.class));
     }
 
     @Override

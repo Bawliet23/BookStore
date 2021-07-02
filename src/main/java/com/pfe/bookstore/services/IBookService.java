@@ -12,6 +12,7 @@ import java.util.List;
 
 public interface IBookService {
     Page<BookDTO> getBooksByPage(Pageable page);
+    Page<BookDTO> getBooksByMostSelles(Pageable page);
     BookDTO getBookById(Long id);
     void saveBook(BookDTO bookDTO, MultipartFile content,MultipartFile cover) throws IOException;
     void deleteBook(Long id);
