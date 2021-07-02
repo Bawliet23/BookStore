@@ -8,6 +8,8 @@ import com.pfe.bookstore.entities.Client;
 import com.pfe.bookstore.repositories.IAuteurRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +42,11 @@ public class AuteurService implements IAuteurService {
         }
          return null;
 
+    }
+
+    @Override
+    public Page<AuteurDTO> getAuteurs(Pageable page) {
+        return auteurRepositor.findAll(page).map(auteur -> modelmapper.map(auteur,AuteurDTO.class));
     }
 //    @Override
 //    public List<AuteurDTO> getFollows(Long id) {

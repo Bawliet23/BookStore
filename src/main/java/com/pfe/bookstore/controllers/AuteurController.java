@@ -4,6 +4,8 @@ import com.pfe.bookstore.DTO.AuteurDTO;
 import com.pfe.bookstore.DTO.AuteurDTO1;
 import com.pfe.bookstore.services.AuteurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +24,11 @@ public class AuteurController {
         if(auteur!=null)
             return ResponseEntity.ok(auteur);
         return ResponseEntity.ok("Author Not Found");
+    }
+    @GetMapping("/all")
+    public ResponseEntity<?> getAuteurByPage(@PageableDefault(size = 10) Pageable page){
+        return ResponseEntity.ok()
+                .body(auteurService.getAuteurs(page));
     }
 
 }
