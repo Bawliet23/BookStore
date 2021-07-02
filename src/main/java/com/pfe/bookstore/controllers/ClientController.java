@@ -3,12 +3,16 @@ package com.pfe.bookstore.controllers;
 import com.pfe.bookstore.DTO.AuteurDTO;
 import com.pfe.bookstore.DTO.BookDTO;
 import com.pfe.bookstore.DTO.CartDTO;
+import com.pfe.bookstore.DTO.ClientDTO;
 import com.pfe.bookstore.entities.Auteur;
 import com.pfe.bookstore.entities.Book;
 import com.pfe.bookstore.entities.Client;
 import com.pfe.bookstore.repositories.IClientRepository;
 import com.pfe.bookstore.services.IClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +28,11 @@ public class ClientController {
     @Autowired
     private IClientService clientService;
 
+    @GetMapping("/all")
+    public ResponseEntity<Page<ClientDTO>> getClients(@PageableDefault(size = 10) Pageable page){
+        return ResponseEntity.ok()
+                .body(clientService.findClients(page));
+    }
     @PostMapping("/{id}/addCart")
     public ResponseEntity<?> addToCart(@PathVariable("id") Long id,@RequestParam("bookId") Long bookId){
     Book book = clientService.addToCart(id,bookId);

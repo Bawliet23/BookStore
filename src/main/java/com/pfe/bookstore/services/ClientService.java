@@ -145,8 +145,9 @@ public class ClientService implements IClientService{
     }
 
     @Override
-    public Page<ClientDTO> findUsers(Pageable page) {
-        return null;
+    public Page<ClientDTO> findClients(Pageable page) {
+        Page<Client> clients = clientRepo.findAll(page);
+        return clients.map(client -> modelMapper.map(client,ClientDTO.class));
     }
 
     @Override
