@@ -54,6 +54,11 @@ public class BookServiceImpl implements IBookService {
     }
 
     @Override
+    public Page<BookDTO> getBooksByPrice(Pageable page) {
+        return bookRepository.findByOrderByPriceDesc(page).map(book -> modelMapper.map(book,BookDTO.class));
+    }
+
+    @Override
     public BookDTO getBookById(Long id) {
         Book book =bookRepository.getOne(id);
         return convertToDTO(book);

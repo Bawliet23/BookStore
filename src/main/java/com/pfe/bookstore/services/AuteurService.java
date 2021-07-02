@@ -6,6 +6,7 @@ import com.pfe.bookstore.DTO.BookDTO1;
 import com.pfe.bookstore.entities.Auteur;
 import com.pfe.bookstore.entities.Client;
 import com.pfe.bookstore.repositories.IAuteurRepository;
+import com.pfe.bookstore.repositories.IBookRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,8 @@ import java.util.stream.Collectors;
 public class AuteurService implements IAuteurService {
     @Autowired
     private IAuteurRepository auteurRepositor;
+    @Autowired
+    private IBookRepository bookRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -47,6 +50,11 @@ public class AuteurService implements IAuteurService {
     @Override
     public Page<AuteurDTO> getAuteurs(Pageable page) {
         return auteurRepositor.findAll(page).map(auteur -> modelmapper.map(auteur,AuteurDTO.class));
+    }
+
+    @Override
+    public List<AuteurDTO1> getTopAuteurs() {
+        return bookRepository.countTopAuteur().stream().map(auteur -> modelmapper.map(auteur,AuteurDTO1.class)).collect(Collectors.toList());
     }
 //    @Override
 //    public List<AuteurDTO> getFollows(Long id) {

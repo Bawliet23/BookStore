@@ -30,5 +30,10 @@ public class AuteurController {
         return ResponseEntity.ok()
                 .body(auteurService.getAuteurs(page));
     }
+    @GetMapping("/top")
+    public ResponseEntity<?> getTopAuteurs(){
+        return ResponseEntity.ok()
+                .body(auteurService.getTopAuteurs());
+    }
 
 }
