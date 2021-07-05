@@ -1,6 +1,7 @@
 package com.pfe.bookstore.services;
 
 import com.pfe.bookstore.DTO.BookDTO;
+import com.pfe.bookstore.DTO.GenreStat;
 import com.pfe.bookstore.entities.Book;
 import com.pfe.bookstore.entities.Genre;
 import org.springframework.data.domain.Page;
@@ -20,4 +21,5 @@ public interface IBookService {
     Page<BookDTO> getBooksByGenre(Pageable page, List<Long> genreId);
     Page<BookDTO> searchBookByName(String name,Pageable page);
     void rateBook(Long userId,Long bookId,Long value);
+    List<GenreStat> countNbrOfSellesByGenres();
 }

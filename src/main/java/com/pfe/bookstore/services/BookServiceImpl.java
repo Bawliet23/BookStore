@@ -2,6 +2,7 @@ package com.pfe.bookstore.services;
 
 import com.pfe.bookstore.DTO.BookDTO;
 import com.pfe.bookstore.DTO.GenreDTO;
+import com.pfe.bookstore.DTO.GenreStat;
 import com.pfe.bookstore.entities.*;
 import com.pfe.bookstore.repositories.*;
 import com.pfe.bookstore.utils.FileHandler;
@@ -51,6 +52,10 @@ public class BookServiceImpl implements IBookService {
     @Override
     public Page<BookDTO> getBooksByMostSelles(Pageable page) {
         return bookRepository.findByOrderBySellesDesc(page).map(book -> modelMapper.map(book,BookDTO.class));
+    }
+    @Override
+    public List<GenreStat> countNbrOfSellesByGenres() {
+        return bookRepository.countNbrOfSellesByGenres();
     }
 
     @Override

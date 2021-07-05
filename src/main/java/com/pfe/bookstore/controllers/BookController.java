@@ -37,6 +37,11 @@ public class BookController {
         return ResponseEntity.ok()
                 .body(bookService.getBooksByPrice(page));
     }
+    @GetMapping("/genreStats")
+    public ResponseEntity<?> countNbrOfSellesByGenres(){
+        return ResponseEntity.ok()
+                .body(bookService.countNbrOfSellesByGenres());
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<BookDTO> getBookById(@PathVariable("id") Long id){

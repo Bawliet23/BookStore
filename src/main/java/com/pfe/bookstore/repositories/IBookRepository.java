@@ -1,5 +1,6 @@
 package com.pfe.bookstore.repositories;
 
+import com.pfe.bookstore.DTO.GenreStat;
 import com.pfe.bookstore.entities.Auteur;
 import com.pfe.bookstore.entities.Book;
 import com.pfe.bookstore.entities.Genre;
@@ -22,4 +23,6 @@ public interface IBookRepository extends JpaRepository<Book,Long> {
     Page<Book> findBooksByNameContaining( Pageable pageable,String name);
     @Query("SELECT b.auteur, COUNT(b.selles) FROM Book AS b GROUP BY b.auteur ORDER BY b.selles DESC")
     List<Auteur> countTopAuteur();
+    @Query("SELECT new com.pfe.bookstore.DTO.GenreStat(bg , SUM(b.selles)) FROM Book AS b LEFT JOIN b.genres bg GROUP BY bg ORDER BY b.selles DESC")
+    List<GenreStat> countNbrOfSellesByGenres();
 }
