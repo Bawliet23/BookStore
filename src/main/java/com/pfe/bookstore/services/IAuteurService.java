@@ -11,6 +11,7 @@ import java.util.List;
 public interface IAuteurService {
     Auteur addAuteur(Auteur auteur);
     AuteurDTO1 getAuteur(Long id);
+    AuteurDTO updateAuteur(AuteurDTO auteurDTO);
     Page<AuteurDTO> getAuteurs(Pageable page);
     List<AuteurDTO1> getTopAuteurs();
 //    List<AuteurDTO> getFollows(Long id);

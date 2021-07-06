@@ -29,7 +29,7 @@ public interface IClientService {
     Client findUser(Long id);
     Page<ClientDTO> findClients(Pageable page);
     void deleteClient(Long id);
-    Client updateUser(Client client);
+    ClientDTO updateClient(ClientDTO clientDto);
     Boolean makeOrder(Long clientId);
     List<BookDTO> getClientBooks(Long id);
 }

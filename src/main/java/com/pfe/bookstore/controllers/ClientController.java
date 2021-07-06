@@ -63,6 +63,10 @@ public class ClientController {
         return ResponseEntity.ok(books);
     }
 
+    @PutMapping("")
+    public  ResponseEntity<?> updateClient(@RequestBody ClientDTO client){
+        return ResponseEntity.ok(clientService.updateClient(client));
+    }
    @DeleteMapping("/{id}/emptyCart")
     public ResponseEntity<?> emptyCart(@PathVariable("id") Long id){
        Boolean isEmpty = clientService.emptyCart(id);

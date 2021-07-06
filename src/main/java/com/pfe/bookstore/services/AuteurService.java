@@ -48,6 +48,17 @@ public class AuteurService implements IAuteurService {
     }
 
     @Override
+    public AuteurDTO updateAuteur(AuteurDTO auteurDTO) {
+
+        Auteur auteur = auteurRepositor.getOne(auteurDTO.getId());
+        auteur.setEmail(auteurDTO.getEmail());
+        auteur.setBio(auteurDTO.getBio());
+        auteur.setUsername(auteurDTO.getUsername());
+        Auteur auteur1 =   auteurRepositor.save(auteur);
+        return modelmapper.map(auteur1,AuteurDTO.class);
+    }
+
+    @Override
     public Page<AuteurDTO> getAuteurs(Pageable page) {
         return auteurRepositor.findAll(page).map(auteur -> modelmapper.map(auteur,AuteurDTO.class));
     }

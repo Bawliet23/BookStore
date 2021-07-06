@@ -17,6 +17,7 @@ public class BookDTO1 {
     private int selles;
     private String image;
     private String contenu;
+    private String language;
     @JsonIgnore
     private List<RateDTO> rates = new ArrayList<>();
     private RateDTO1 rating =new RateDTO1();

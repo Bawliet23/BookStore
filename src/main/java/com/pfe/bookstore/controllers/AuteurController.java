@@ -2,6 +2,7 @@ package com.pfe.bookstore.controllers;
 
 import com.pfe.bookstore.DTO.AuteurDTO;
 import com.pfe.bookstore.DTO.AuteurDTO1;
+import com.pfe.bookstore.DTO.ClientDTO;
 import com.pfe.bookstore.services.AuteurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +35,10 @@ public class AuteurController {
     public ResponseEntity<?> getTopAuteurs(){
         return ResponseEntity.ok()
                 .body(auteurService.getTopAuteurs());
+    }
+    @PutMapping("")
+    public  ResponseEntity<?> updateClient(@RequestBody AuteurDTO auteurDTO){
+        return ResponseEntity.ok(auteurService.updateAuteur(auteurDTO));
     }
 
 }

@@ -26,6 +26,7 @@ public class Book implements Serializable {
     private int selles;
     private String image;
     private String contenu;
+    private String language;
     @ManyToOne(fetch = FetchType.LAZY,cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE

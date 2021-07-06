@@ -156,8 +156,12 @@ public class ClientService implements IClientService{
     }
 
     @Override
-    public Client updateUser(Client client) {
-        return null;
+    public ClientDTO updateClient(ClientDTO clientDTO) {
+        Client client = clientRepo.getOne(clientDTO.getId());
+        client.setEmail(clientDTO.getEmail());
+        client.setUsername(clientDTO.getUsername());
+        Client c = clientRepo.save(client);
+        return modelMapper.map(c,ClientDTO.class);
     }
 
     @Override
