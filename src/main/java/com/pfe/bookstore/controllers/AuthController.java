@@ -48,7 +48,12 @@ public class AuthController {
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
         final MyUserPrincipal userDetails = (MyUserPrincipal) userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponseAuteur(token,modelMapper.map(userDetails.getUser(), UserDTO.class)));
+        if (userDetails.getUser().getRole().equals("client")){
+            ClientDTO client = clientService.findUser(userDetails.getUser().getId());
+            return ResponseEntity.ok(new JwtResponseClient(token,client));
+        }
+        AuteurDTO1 auteurDTO = auteurService.getAuteur(userDetails.getUser().getId());
+        return ResponseEntity.ok(new JwtResponseAuteur(token,modelMapper.map(auteurDTO, AuteurDTO.class)));
     }
     @PostMapping(value = "/signUp",consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> signUp(@RequestBody RegisterDTO user) throws Exception {

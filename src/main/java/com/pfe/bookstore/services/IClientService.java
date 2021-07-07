@@ -26,7 +26,7 @@ public interface IClientService {
     Boolean emptyWishlist(Long id);
     Boolean deleteCartItem(Long id,Long bookId);
     Boolean deleteWishListItem(Long id,Long bookId);
-    Client findUser(Long id);
+    ClientDTO findUser(Long id);
     Page<ClientDTO> findClients(Pageable page);
     void deleteClient(Long id);
     ClientDTO updateClient(ClientDTO clientDto);

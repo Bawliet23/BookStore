@@ -141,7 +141,11 @@ public class ClientService implements IClientService{
     }
 
     @Override
-    public Client findUser(Long id) {
+    public ClientDTO findUser(Long id) {
+        Optional<Client> byId = clientRepo.findById(id);
+        if (byId.isPresent()){
+            return modelMapper.map(byId.get(),ClientDTO.class);
+        }
         return null;
     }
 
