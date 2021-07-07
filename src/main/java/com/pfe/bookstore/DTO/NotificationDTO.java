@@ -7,4 +7,5 @@ public class NotificationDTO {
     private Long id;
     private String notification;
     private Long userId;
+    private boolean seen;
 }

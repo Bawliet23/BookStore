@@ -49,4 +49,9 @@ public class UserController {
         return ResponseEntity.ok()
                 .body("Comment Not Updated");
     }
+    @PutMapping("/{notificationId}/seen")
+    public ResponseEntity<?> notificationSeen(@PathVariable("notificationId") Long notificationId) {
+        userService.NotificationSeen(notificationId);
+        return ResponseEntity.ok("Notification Seen");
+    }
 }

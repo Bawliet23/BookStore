@@ -6,9 +6,9 @@ import com.pfe.bookstore.entities.Comment;
 import com.pfe.bookstore.entities.Notification;
 import com.pfe.bookstore.entities.User;
 import com.pfe.bookstore.repositories.ICommentRepository;
+import com.pfe.bookstore.repositories.INotificationRepository;
 import com.pfe.bookstore.repositories.IUserRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,12 +22,14 @@ public class UserServiceImpl implements IUserService {
     private final IUserRepository userRepository;
     private final ModelMapper modelMapper;
     private final ICommentRepository commentRepository;
+    private final INotificationRepository notificationRepo;
 
 
-    public UserServiceImpl(IUserRepository userRepository, ModelMapper modelMapper, ICommentRepository commentRepository) {
+    public UserServiceImpl(IUserRepository userRepository, ModelMapper modelMapper, ICommentRepository commentRepository, INotificationRepository notificationRepo) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.commentRepository = commentRepository;
+        this.notificationRepo = notificationRepo;
     }
 
 
@@ -66,6 +68,16 @@ public class UserServiceImpl implements IUserService {
 
 
         return null;
+    }
+
+    @Override
+    public void NotificationSeen(Long id) {
+        Optional<Notification> byId = notificationRepo.findById(id);
+        if(byId.isPresent()){
+            Notification notification =byId.get();
+            notification.setSeen(true);
+            notificationRepo.save(notification);
+        }
     }
 
 

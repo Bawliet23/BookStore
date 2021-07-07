@@ -93,6 +93,7 @@ public class ClientService implements IClientService{
             Notification notification = new Notification();
             notification.setNotification(client.getUsername()+" follows You.");
             notification.setUser(auteur);
+            notification.setSeen(false);
             notificationRepository.save(notification);
             webSocketService.followNotification(auteurId,client.getUsername()+" follows You. ");
             clientRepo.save(client);

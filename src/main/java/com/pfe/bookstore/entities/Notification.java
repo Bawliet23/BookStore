@@ -15,6 +15,7 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String notification;
+    private boolean seen;
     @ManyToOne(fetch = FetchType.LAZY,  cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE

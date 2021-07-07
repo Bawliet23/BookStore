@@ -91,6 +91,7 @@ public class BookServiceImpl implements IBookService {
             Notification notification = new Notification();
             notification.setNotification(auteur.getUsername()+" added a new Book with the title "+book.getName());
             notification.setUser(client);
+            notification.setSeen(false);
             notificationRepository.save(notification);
             webSocketService.newBookNotification(client.getId());
         }
