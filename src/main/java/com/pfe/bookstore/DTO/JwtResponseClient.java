@@ -1,12 +1,10 @@
 package com.pfe.bookstore.DTO;
 
-import java.io.Serializable;
-
-public class JwtResponse implements Serializable {
+public class JwtResponseClient {
     private static final long serialVersionUID = -8091879091924046844L;
     private final String jwttoken;
-    private UserDTO client;
-    public JwtResponse(String jwttoken,UserDTO client) {
+    private ClientDTO client;
+    public JwtResponseClient(String jwttoken, ClientDTO client) {
         this.jwttoken = "Bearer "+jwttoken;
         this.client=client;
     }

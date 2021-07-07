@@ -16,7 +16,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -49,7 +48,7 @@ public class AuthController {
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
         final MyUserPrincipal userDetails = (MyUserPrincipal) userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(token,modelMapper.map(userDetails.getUser(), UserDTO.class)));
+        return ResponseEntity.ok(new JwtResponseAuteur(token,modelMapper.map(userDetails.getUser(), UserDTO.class)));
     }
     @PostMapping(value = "/signUp",consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> signUp(@RequestBody RegisterDTO user) throws Exception {
@@ -58,13 +57,13 @@ public class AuthController {
             Client client1=clientService.addClient(client);
         UserDetails userDetails=new MyUserPrincipal(client1);
         final String token = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(token,modelMapper.map(client1, ClientDTO.class)));
+        return ResponseEntity.ok(new JwtResponseClient(token,modelMapper.map(client1, ClientDTO.class)));
         }else if(user.getRole().equals("auteur")){
             Auteur auteur = modelMapper.map(user,Auteur.class);
             Auteur auteur1 = auteurService.addAuteur(auteur);
             UserDetails userDetails=new MyUserPrincipal(auteur1);
             final String token = jwtTokenUtil.generateToken(userDetails);
-            return ResponseEntity.ok(new JwtResponse(token,modelMapper.map(auteur1, AuteurDTO.class)));
+            return ResponseEntity.ok(new JwtResponseAuteur(token,modelMapper.map(auteur1, AuteurDTO.class)));
         }
         return ResponseEntity.badRequest().body("Bad Credentials ");
     }
