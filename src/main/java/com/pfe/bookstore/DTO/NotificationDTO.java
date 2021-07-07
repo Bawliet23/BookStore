@@ -8,4 +8,5 @@ public class NotificationDTO {
     private String notification;
     private Long userId;
     private boolean seen;
+    private Long redirect;
 }

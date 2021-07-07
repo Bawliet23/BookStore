@@ -16,6 +16,7 @@ public class Notification {
     private Long id;
     private String notification;
     private boolean seen;
+    private Long redirect;
     @ManyToOne(fetch = FetchType.LAZY,  cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE

@@ -83,7 +83,7 @@ public class BookServiceImpl implements IBookService {
         }
         book.setGenres(genres);
         book.setAuteur(auteur);
-        bookRepository.save(book);
+        Book b = bookRepository.save(book);
         List<Auteur> auteurs = new ArrayList<>();
         auteurs.add(auteur);
         List<Client> clients =  clientRepo.findClientsByFallowsIn(auteurs);
@@ -92,6 +92,7 @@ public class BookServiceImpl implements IBookService {
             notification.setNotification(auteur.getUsername()+" added a new Book with the title "+book.getName());
             notification.setUser(client);
             notification.setSeen(false);
+            notification.setRedirect(b.getId());
             notificationRepository.save(notification);
             webSocketService.newBookNotification(client.getId());
         }
